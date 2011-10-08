@@ -1,7 +1,10 @@
 <?php
-
+/**
+ * Implements hook_init().
+ * Intercepts certain requests and attempts to hotlink/download the remote
+ * version.
+ */
 function stage_file_proxy_init() {
-
   // make sure we're asking for a file in the files dir
   $file_dir = file_directory_path();
   if (strpos($_GET['q'], $file_dir) !== 0) {
