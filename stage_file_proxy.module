@@ -5,8 +5,10 @@
  * version.
  */
 function stage_file_proxy_init() {
-  // make sure we're asking for a file in the files dir
-  $file_dir = file_directory_path();
+
+  // Make sure we're requesting a file in the files dir
+  // Currently this only works for PUBLIC files
+  $file_dir = variable_get('file_public_path', conf_path() . '/files');
   if (strpos($_GET['q'], $file_dir) !== 0) {
     return;
   }
