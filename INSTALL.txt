@@ -2,7 +2,7 @@
 To use Stage File Proxy, you must add variables to $conf in settings.php:
 
 REQUIRED:
-$conf['stage_file_proxy_origin] = 'http://example.com'; // no trailing slash
+$conf['stage_file_proxy_origin'] = 'http://example.com'; // no trailing slash
 
 OPTIONAL:
 
