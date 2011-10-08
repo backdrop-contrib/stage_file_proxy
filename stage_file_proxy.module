@@ -1,17 +1,18 @@
 <?php
 
 function stage_file_proxy_init() {
-  
+
   // make sure we're asking for a file in the files dir
   $file_dir = file_directory_path();
   if (strpos($_GET['q'], $file_dir) !== 0) {
     return;
   }
-  $relative_path = substr($_GET['q'], strlen($file_dir) + 1);
-  
+
+  $relative_path = drupal_substr($_GET['q'], drupal_strlen($file_dir) + 1);
+
   // get origin server
   $server = variable_get('stage_file_proxy_origin', NULL);
-  
+
   if ($server) {
     // is this an imagecache request? if so, request only the root file and let imagecache handle resizing
     if (variable_get('stage_file_proxy_use_imagecache_root', TRUE) && strpos($relative_path, 'imagecache') === 0) {
@@ -20,7 +21,7 @@ function stage_file_proxy_init() {
         return; // imagecache can generate it without our help.
       }
     }
-    
+
     if (variable_get('stage_file_proxy_hotlink', FALSE)) {
       header("Location: $server/{$_GET['q']}");
       exit;
