@@ -37,7 +37,9 @@ function stage_file_proxy_init() {
       exit;
     }
     else {
-      die('Stage File Proxy encountered an unknown error');
+      watchdog(WATCHDOG_ERROR, 'Stage File Proxy encountered an unknown error');
+      drupal_not_found();
+      exit;
     }
   }
 }
