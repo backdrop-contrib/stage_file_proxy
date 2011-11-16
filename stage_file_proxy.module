@@ -20,8 +20,8 @@ function stage_file_proxy_init() {
 
   if ($server) {
     // is this an imagecache request? if so, request only the root file and let imagecache handle resizing
-    if (variable_get('stage_file_proxy_use_imagecache_root', TRUE) && strpos($relative_path, 'imagecache') === 0) {
-      $relative_path = preg_replace('/imagecache\/.*\/(.*)/U', '$1', $relative_path);
+    if (variable_get('stage_file_proxy_use_imagecache_root', TRUE) && $original_path = _stage_file_proxy_image_style_path_original($relative_path, TRUE)) {
+      $relative_path = $original_path;
       if (file_exists($file_dir . '/' . $relative_path)) {
         return; // imagecache can generate it without our help.
       }
@@ -75,4 +75,40 @@ function _stage_file_proxy_fetch($server, $relative_path) {
  */
 function _stage_file_proxy_file_dir() {
   return variable_get('file_public_path', conf_path() . '/files');
+}
+
+/**
+ * Helper to retrieves original path for a styled image.
+ *
+ * @param string $uri
+ *   a uri or path (may be prefixed with scheme)
+ * @param bool $style_only
+ *   indicates if, the function should only return paths retrieved from style
+ *   paths. Defaults to TRUE.
+ * @return
+ *   a path to the given original image
+ *   if $style_only is set to TRUE and $uri is no style-path, FALSE is returned.
+ */
+function _stage_file_proxy_image_style_path_original($uri, $style_only = TRUE) {
+  $scheme = file_uri_scheme($uri);
+  if ($scheme) {
+    $path = file_uri_target($uri);
+  }
+  else {
+    $path = $uri;
+    $scheme = file_default_scheme();
+  }
+
+  // It is a styles path, so we extract the different parts.
+  if (strpos($path, 'styles') === 0) {
+    // then the path is like styles/[style_name]/[schema]/[original_path]
+    return preg_replace('/styles\/.*\/.*\/(.*)/U', '$1', $path);
+  }
+  // else it seems to be the original.
+  elseif ($style_only == FALSE) {
+    return $path;
+  }
+  else {
+    return FALSE;
+  }
 }
