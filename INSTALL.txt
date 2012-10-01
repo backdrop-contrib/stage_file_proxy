@@ -23,3 +23,12 @@ Default is FALSE.
 If this is true then Stage File Proxy will not transfer the remote file to the
 local machine, it will just serve a 301 to the remote file and let the origin
 webserver handle it.
+
+$conf['stage_file_proxy_origin_dir'] = 'sites/default/files';
+
+Default is 'sites/default/files';
+
+If this is set then Stage File Proxy will use a different path for the remote
+files. This is useful for multisite installations where the sites directory
+contains different names for each url. If this is not set, it defaults to the
+same path as the local site (sites/default/files).
