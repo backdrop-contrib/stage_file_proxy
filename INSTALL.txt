@@ -5,9 +5,17 @@ To use Stage File Proxy, you must add variables to $conf in settings.php:
 REQUIRED:
 =========
 
+The origin website. 
+
 $conf['stage_file_proxy_origin'] = 'http://example.com'; // no trailing slash
 
-The origin website.
+If the site is using HTTP Basic Authentication (the browser popup for username
+and password) you can embed those in the url. Be sure to URL encode any 
+special characters:
+
+For a username of myusername and password letme&in the configuration would be:
+
+$conf['stage_file_proxy_origin'] = 'http://myusername:letme%26in@example.com';
 
 OPTIONAL
 ========
