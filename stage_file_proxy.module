@@ -63,7 +63,7 @@ function _stage_file_proxy_fetch($server, $remote_file_dir, $relative_path) {
       mkdir($dir_path);
     }
   }
-  $url = $server . '/' . $remote_dir_path . '/' . rawurlencode($filename);
+  $url = $server . '/' . rawurlencode($remote_dir_path) . '/' . rawurlencode($filename);
   $ch = curl_init($url);
   curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
   curl_setopt($ch, CURLOPT_FOLLOWLOCATION, TRUE);
