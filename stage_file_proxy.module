@@ -63,7 +63,7 @@ function _stage_file_proxy_fetch($server, $remote_file_dir, $relative_path) {
       mkdir($dir_path);
     }
   }
-  $url = $server . '/' . rawurlencode($remote_dir_path) . '/' . rawurlencode($filename);
+  $url = $server . '/' . drupal_encode_path($remote_dir_path . '/' . $filename);
   $response = drupal_http_request($url);
   if ($response->code == 200) {
     file_put_contents($file_dir . '/' . $relative_path, $response->data);
