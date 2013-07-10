@@ -31,13 +31,17 @@ function stage_file_proxy_init() {
       }
     }
 
+    $query_parameters = drupal_get_query_parameters();
+
     if (variable_get('stage_file_proxy_hotlink', FALSE)) {
-      header("Location: $server/$remote_file_dir/$relative_path");
+      $location = url("$server/$remote_file_dir/$relative_path", array('query' => $query_parameters, 'absolute' => TRUE));
+      header("Location: $location");
       exit;
     }
     elseif (_stage_file_proxy_fetch($server, $remote_file_dir, $relative_path)) {
       // Just refresh this request and let the web server work out the mime type, etc.
-      header("Location: /{$_GET['q']}");
+      $location = url("{$_GET['q']}", array('query' => $query_parameters));
+      header("Location: $location");
       exit;
     }
     else {
