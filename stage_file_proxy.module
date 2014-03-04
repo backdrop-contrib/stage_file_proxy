@@ -18,6 +18,11 @@ function stage_file_proxy_init() {
     return;
   }
 
+  // If this is a advagg path, ignore it.
+  if (strpos($_GET['q'], '/advagg_') !== FALSE && module_exists('advagg')) {
+    return;
+  }
+
   // Note if the origin server files location is different. This
   // must be the exact path for the remote site's public file
   // system path, and defaults to the local public file system path.
