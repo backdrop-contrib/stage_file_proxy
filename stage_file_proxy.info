@@ -1,5 +1,4 @@
 name = Stage File Proxy
 description = Proxies files from production server so you don't have to transfer them manually
 core = 7.x
-version=7.x-0.1-dev
 configure = admin/config/system/stage_file_proxy
