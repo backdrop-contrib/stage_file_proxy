@@ -171,6 +171,9 @@ function stage_file_proxy_menu() {
   return $items;
 }
 
+/**
+ * Page callback/form for admin interface.
+ */
 function stage_file_proxy_admin() {
   $form = array();
 
@@ -178,11 +181,11 @@ function stage_file_proxy_admin() {
     '#type' => 'textfield',
     '#title' => t('The origin website.'),
     '#default_value' => variable_get('stage_file_proxy_origin', ''),
-    '#description' => t('The origin website. For example: \'http://example.com\' with no trailing slash.
+    '#description' => t("The origin website. For example: 'http://example.com' with no trailing slash.
       If the site is using HTTP Basic Authentication (the browser popup for username and password) you can
       embed those in the url. Be sure to URL encode any special characters:<br/><br/>For example, setting a user
-      name of "myusername" and password as, "letme&in" the configuration would be the following: <br/><br/>
-      \'http://myusername:letme%26in@example.com\';'),
+      name of 'myusername' and password as, 'letme&in' the configuration would be the following: <br/><br/>
+      'http://myusername:letme%26in@example.com';"),
     '#required' => FALSE,
   );
 
@@ -232,6 +235,9 @@ function stage_file_proxy_admin() {
   return system_settings_form($form);
 }
 
+/**
+ * Validate the admin form.
+ */
 function stage_file_proxy_admin_validate($form, &$form_state) {
   $origin = $form_state['values']['stage_file_proxy_origin'];
   $sslversion = $form_state['values']['stage_file_proxy_sslversion'];
