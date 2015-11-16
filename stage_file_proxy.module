@@ -311,7 +311,7 @@ function stage_file_proxy_fetch_file($relative_path, array $options = array()) {
   if ($result->code != 200) {
     watchdog('stage_file_proxy', 'HTTP error @errorcode occurred when trying to fetch @remote.', array('@errorcode' => $result->code, '@remote' => $url), WATCHDOG_ERROR);
     $failures[$url] = TRUE;
-    cache_set('stage_file_proxy_failures', $failures, 'cache', CACHE_TEMPORARY);
+    cache_set('stage_file_proxy_fetch_url_failures', $failures, 'cache', CACHE_TEMPORARY);
     return FALSE;
   }
 
