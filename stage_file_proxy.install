@@ -1,0 +1,27 @@
+<?php
+
+/**
+ * @file
+ * Stage File Proxy module installation functions.
+ */
+
+/**
+ * Move book settings from variables to config.
+ */
+function stage_file_proxy_update_1000() {
+  // Migrate variables to config.
+  $config = config('stage_file_proxy.settings');
+  $config->set('origin', update_variable_get('stage_file_proxy_origin', ''));
+  $config->set('origin_dir', update_variable_get('stage_file_proxy_origin_dir', 'files'));
+  $config->set('hotlink', update_variable_get('stage_file_proxy_hotlink', false));
+  $config->set('use_imagecache_root', update_variable_get('stage_file_proxy_use_imagecache_root', true));
+  $config->set('sslversion', update_variable_get('stage_file_proxy_sslversion', 3));
+  $config->save();
+
+  // Delete variables.
+  update_variable_del('stage_file_proxy_origin');
+  update_variable_del('stage_file_proxy_origin_dir');
+  update_variable_del('stage_file_proxy_hotlink');
+  update_variable_del('stage_file_proxy_use_imagecache_root');
+  update_variable_del('stage_file_proxy_sslversion');
+}
