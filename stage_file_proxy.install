@@ -6,7 +6,7 @@
  */
 
 /**
- * Move book settings from variables to config.
+ * Move stage_file_proxy settings from variables to config.
  */
 function stage_file_proxy_update_1000() {
   // Migrate variables to config.
