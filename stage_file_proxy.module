@@ -503,9 +503,9 @@ function stage_file_proxy_file_url_alter(&$url) {
 }
 
 /**
- * Implements hook_preprocess_picture().
+ * Implements hook_preprocess_HOOK() for theme_picture().
  */
-function template_preprocess_picture(&$variables) {
+function stage_file_proxy_preprocess_picture(&$variables) {
   // Run the image path through the stage file proxy process before the call
   // to image_load() makes everything fail in theme_picture().
   if (!empty($variables['uri'])) {
