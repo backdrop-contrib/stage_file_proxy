@@ -508,5 +508,10 @@ function stage_file_proxy_file_url_alter(&$url) {
 function template_preprocess_picture(&$variables) {
   // Run the image path through the stage file proxy process before the call
   // to image_load() makes everything fail in theme_picture().
-  stage_file_proxy_process_file_uri($variables['uri']);
+  if (!empty($variables['uri'])) {
+    stage_file_proxy_process_file_uri($variables['uri']);
+  }
+  elseif (!empty($variables['path'])) {
+    stage_file_proxy_process_file_uri($variables['path']);
+  }
 }
