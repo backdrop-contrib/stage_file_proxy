@@ -464,21 +464,20 @@ function stage_file_proxy_process_file_uri($uri) {
       }
     }
 
+    // Path relative to file directory. Used for hotlinking.
     $relative_path = file_uri_target($uri);
     if ($proxy_url = stage_file_proxy_get_file_remote_url($relative_path)) {
-      // Check if hotlinking is enabled.
-      if ($config->get('hotlink')) {
-        return $proxy_url;
-      }
-
       // Is this imagecache? Request the root file and let imagecache resize.
-      if ($config->get('use_image_style_root') && $original_path = _stage_file_proxy_image_style_path_original($relative_path, TRUE)) {
-        if (is_file($original_path)) {
+      // We check this first so locally added files have precedence.
+      $original_path = _stage_file_proxy_image_style_path_original($relative_path, TRUE);
+      if ($original_path) {
+        if (file_exists($original_path)) {
           // image_style_deliver() can generate the derivative since the
           // source file exists.
           return FALSE;
         }
-        else {
+        if ($config->get('use_image_style_root')) {
+          // Config says: Fetch the original.
           // Attempt to download the source of the requested derivative image.
           stage_file_proxy_fetch_file(file_uri_target($original_path));
           // Do not change the file's URL since we want to still direct the
@@ -487,6 +486,11 @@ function stage_file_proxy_process_file_uri($uri) {
         }
       }
 
+      // Check if hotlinking is enabled.
+      if ($config->get('hotlink')) {
+        return $proxy_url;
+      }
+      // It's an image original, no hotlinking, so just fetch.
       if ($local = stage_file_proxy_fetch_file($relative_path)) {
         // If the file was downloaded successfully, then set the path to the
         // now local version of the file. This result is different since it
