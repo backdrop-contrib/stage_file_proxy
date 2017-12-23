@@ -448,7 +448,11 @@ function stage_file_proxy_process_file_uri($uri) {
     return FALSE;
   }
 
-  if (file_uri_scheme($uri) === 'public' && !is_file($uri)) {
+  // There are cases when this is called for non-files, e.g. when someone does a
+  // file_create_url() for a dir, and stage_file_proxy_file_url_alter calls us.
+  // Anyway, whatever is there - maybe a symlink or some other odd ork - will
+  // break our logic anyway. So checking for file_exists() here.
+  if (file_uri_scheme($uri) === 'public' && !file_exists($uri)) {
     $excluded_paths = array();
     backdrop_alter('stage_file_proxy_excluded_paths', $excluded_paths, $uri);
     foreach ($excluded_paths as $excluded_path) {
