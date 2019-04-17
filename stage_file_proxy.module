@@ -280,8 +280,13 @@ function stage_file_proxy_get_file_remote_url($relative_path, array $options = a
 
   if (!isset($base_url)) {
     $base_url = FALSE;
+    $server = rtrim($config->get('origin'), '/');
 
-    if ($server = rtrim($config->get('origin'), '/')) {
+    // Quit if we are the origin. Ignore http(s) in the origin comparison.
+    if (preg_replace('#^[a-z]*://#', '', $server) == preg_replace('#^[a-z]*://#', '', $GLOBALS['base_url'])) {
+      return FALSE;
+    }
+    if ($server) {
       $base_url = $server . '/';
     }
     $dir = empty($config->get('origin_dir')) ? _stage_file_proxy_file_dir() : $config->get('origin_dir');
