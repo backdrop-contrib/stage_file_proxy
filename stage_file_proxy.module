@@ -430,7 +430,6 @@ function _stage_file_proxy_create_headers_array($headers_string) {
   return $headers;
 }
 
-
 /**
  * Checks to see if a file should be downloaded from the origin site.
  *
