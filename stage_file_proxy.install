@@ -25,3 +25,12 @@ function stage_file_proxy_update_1000() {
   update_variable_del('stage_file_proxy_use_imagecache_root');
   update_variable_del('stage_file_proxy_sslversion');
 }
+
+/**
+ * Add new 'excluded_extensions' variable.
+ */
+function stage_file_proxy_update_1001() {
+  $config = config('stage_file_proxy.settings');
+  $config->set('excluded_extensions', '');
+  $config->save();
+}
