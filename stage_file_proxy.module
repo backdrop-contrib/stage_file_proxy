@@ -64,7 +64,7 @@ function _stage_file_proxy_file_dir() {
  * Helper to retrieves original path for a styled image.
  *
  * @param string $uri
- *   A uri or path (may be prefixed with scheme)
+ *   A uri or path (may be prefixed with scheme).
  * @param bool $style_only
  *   Indicates if, the function should only return paths retrieved from style
  *   paths. Defaults to TRUE.
@@ -238,7 +238,7 @@ function stage_file_proxy_admin_submit($form, &$form_state) {
  * Fetches a normalized file URI from the current request.
  *
  * @param string $path
- *   An optional path
+ *   An optional path.
  *
  * @return bool|string
  *   A string containing the file URI, or FALSE if the current request is not
