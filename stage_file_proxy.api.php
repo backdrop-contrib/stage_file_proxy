@@ -8,7 +8,7 @@
 /**
  * Alter the list of paths that should be excluded by stage file proxy.
  *
- * @param array $engines
+ * @param array $excluded_paths
  *   An array (passed by reference) of the list of paths.
  * @param string $uri
  *   The uri of the file.
