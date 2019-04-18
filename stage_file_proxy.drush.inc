@@ -21,7 +21,9 @@ function stage_file_proxy_drush_command() {
  * Download all managed files from the origin.
  */
 function drush_stage_file_proxy_dl() {
-  if (empty(config_get('stage_file_proxy.settings', 'stage_file_proxy_origin'))) {
+  $origin = config_get('stage_file_proxy.settings', 'stage_file_proxy_origin');
+
+  if (empty($origin)) {
     drush_print(dt('Origin website not configured.'), 'error');
     return;
   }
