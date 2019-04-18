@@ -360,6 +360,18 @@ function stage_file_proxy_fetch_file($relative_path, array $options = array()) {
 }
 
 /**
+ * Implements hook_stage_file_proxy_excluded_paths_alter().
+ *
+ * @todo: Move this to the advagg module.
+ */
+function stage_file_proxy_stage_file_proxy_excluded_paths_alter(&$excluded_paths) {
+  // If this is a advagg path, ignore it.
+  if (module_exists('advagg')) {
+    $excluded_paths[] = '/advagg_';
+  }
+}
+
+/**
  * Checks to see if a file should be downloaded from the origin site.
  *
  * @param string $uri
