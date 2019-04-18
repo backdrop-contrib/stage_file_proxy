@@ -364,7 +364,7 @@ function stage_file_proxy_fetch_file($relative_path, array $options = array()) {
  *
  * @todo: Move this to the advagg module.
  */
-function stage_file_proxy_stage_file_proxy_excluded_paths_alter(&$excluded_paths) {
+function stage_file_proxy_stage_file_proxy_excluded_paths_alter(&$excluded_paths, $uri) {
   // If this is a advagg path, ignore it.
   if (module_exists('advagg')) {
     $excluded_paths[] = '/advagg_';
@@ -390,9 +390,12 @@ function stage_file_proxy_process_file_uri($uri) {
   }
 
   if (file_uri_scheme($uri) === 'public' && !is_file($uri)) {
-    // If this is a advagg path, ignore it.
-    if (strpos($uri, '/advagg_') !== FALSE && module_exists('advagg')) {
-      return FALSE;
+    $excluded_paths = array();
+    backdrop_alter('stage_file_proxy_excluded_paths', $excluded_paths, $uri);
+    foreach ($excluded_paths as $excluded_path) {
+      if (strpos($uri, $excluded_path) !== FALSE) {
+        return FALSE;
+      }
     }
 
     $relative_path = file_uri_target($uri);
