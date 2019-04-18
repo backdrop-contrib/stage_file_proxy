@@ -469,7 +469,10 @@ function stage_file_proxy_process_file_uri($uri) {
  * Implements hook_file_url_alter().
  */
 function stage_file_proxy_file_url_alter(&$url) {
-  stage_file_proxy_process_file_uri($url);
+  // Processed $url may return updated value in some cases (hotlinking etc.).
+  if ($processed_url = stage_file_proxy_process_file_uri($url)) {
+    $url = $processed_url;
+  }
 }
 
 /**
