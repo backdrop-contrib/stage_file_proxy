@@ -212,7 +212,7 @@ function stage_file_proxy_admin() {
     '#title' => t('HTTP headers'),
     '#default_value' => $config->get('proxy_headers'),
     '#description' => t('When Stage File Proxy is configured to transfer the
-      remote file to local machine, it will use this headers for HTTP request.
+      remote file to local machine, it will use these headers for HTTP request.
       Use format like "Referer|http://example.com/'),
     '#required' => FALSE,
   );
