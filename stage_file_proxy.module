@@ -181,7 +181,7 @@ function stage_file_proxy_admin() {
   $form['stage_file_proxy_excluded_extensions'] = array(
     '#type' => 'textfield',
     '#title' => t('Excluded Extensions'),
-    '#default_value' => $config->get('stage_file_proxy_excluded_extensions'),
+    '#default_value' => $config->get('excluded_extensions'),
     '#description' => t("A comma separated list of the extensions that will not be fetched by Stage File Proxy if Hotlinking is disabled. For example: 'mp3,ogg'"),
     '#required' => FALSE,
   );
@@ -236,7 +236,7 @@ function stage_file_proxy_admin_submit($form, &$form_state) {
   $config->set('origin', $form_state['values']['stage_file_proxy_origin']);
   $config->set('origin_dir', $form_state['values']['stage_file_proxy_origin_dir']);
   $config->set('hotlink', $form_state['values']['stage_file_proxy_hotlink']);
-  $config->set('stage_file_proxy_excluded_extensions', $form_state['values']['stage_file_proxy_excluded_extensions']);
+  $config->set('excluded_extensions', $form_state['values']['stage_file_proxy_excluded_extensions']);
   $config->set('use_image_style_root', $form_state['values']['stage_file_proxy_use_image_style_root']);
   $config->set('sslversion', $form_state['values']['stage_file_proxy_sslversion']);
   $config->save();
@@ -337,7 +337,7 @@ function stage_file_proxy_fetch_file($relative_path, array $options = array()) {
     }
   }
 
-  $excluded_extensions = array_map('trim', explode(',', $config->get('stage_file_proxy_excluded_extensions')));
+  $excluded_extensions = array_map('trim', explode(',', $config->get('excluded_extensions')));
 
   $path_info = pathinfo($relative_path);
   $ext = $path_info['extension'];
