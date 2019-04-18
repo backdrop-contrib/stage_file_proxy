@@ -25,3 +25,8 @@ function stage_file_proxy_update_1000() {
   update_variable_del('stage_file_proxy_use_imagecache_root');
   update_variable_del('stage_file_proxy_sslversion');
 }
+
+function stage_file_proxy_uninstall() {
+  $config = config('stage_file_proxy.settings');
+  $config->delete();
+}
