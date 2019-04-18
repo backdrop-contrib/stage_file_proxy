@@ -2,6 +2,7 @@
     "_config_name": "stage_file_proxy.settings",
     "origin": "",
     "origin_dir": "files",
+    "excluded_extensions" : "",
     "hotlink": false,
     "use_image_style_root": true,
     "sslversion": 3
