@@ -190,6 +190,16 @@ function stage_file_proxy_admin() {
     '#required' => FALSE,
   );
 
+  $form['stage_file_proxy_headers'] = array(
+    '#type' => 'textarea',
+    '#title' => t('HTTP headers'),
+    '#default_value' => $config->get('proxy_headers'),
+    '#description' => t('When Stage File Proxy is configured to transfer the
+      remote file to local machine, it will use this headers for HTTP request.
+      Use format like "Referer|http://example.com/'),
+    '#required' => FALSE,
+  );
+
   // Add a submit button
   $form['actions']['#type'] = 'actions';
   $form['actions']['submit'] = array(
@@ -342,7 +352,8 @@ function stage_file_proxy_fetch_file($relative_path, array $options = array()) {
 
   $destination = str_replace('///', '//', "$destination/") . backdrop_basename($relative_path);
 
-  $result = backdrop_http_request($url);
+  $headers = _stage_file_proxy_create_headers_array(config_get('stage_file_proxy.settings', 'proxy_headers'));
+  $result = backdrop_http_request($url, array('headers' => $headers));
   if ($result->code != 200) {
     watchdog('stage_file_proxy', 'HTTP error @errorcode occurred when trying to fetch @remote.', array('@errorcode' => $result->code, '@remote' => $url), WATCHDOG_ERROR);
     $failures[$url] = TRUE;
@@ -357,6 +368,22 @@ function stage_file_proxy_fetch_file($relative_path, array $options = array()) {
   }
 
   return $local;
+}
+
+/**
+ * Help function to generate HTTP headers for backdrop_http_request.
+ */
+function _stage_file_proxy_create_headers_array($headers_string) {
+  $lines = explode("\n", $headers_string);
+  $headers = array();
+  foreach ($lines as $line) {
+    $header = explode('|', $line);
+    if (count ($header) > 1) {
+      $headers[$header[0]] = $header[1];
+    }
+  }
+
+  return $headers;
 }
 
 /**
