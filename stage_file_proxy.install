@@ -31,6 +31,26 @@ function stage_file_proxy_update_1000() {
  */
 function stage_file_proxy_update_1001() {
   $config = config('stage_file_proxy.settings');
-  $config->set('excluded_extensions', '');
+  $excluded_extensions = $config->get('excluded_extensions');
+  if (empty($excluded_extensions)) {
+    $config->set('excluded_extensions', update_variable_get('stage_file_proxy_excluded_extensions', ''));
+  }
   $config->save();
+
+  update_variable_del('stage_file_proxy_excluded_extensions');
 }
+
+/**
+ * Add new 'headers' variable.
+ */
+function stage_file_proxy_update_1002() {
+  $config = config('stage_file_proxy.settings');
+  $headers = $config->get('headers');
+  if (empty($headers)) {
+    $config->set('headers', update_variable_get('stage_file_proxy_headers', ''));
+  }
+  $config->save();
+
+  update_variable_del('stage_file_proxy_headers');
+}
+
