@@ -210,7 +210,7 @@ function stage_file_proxy_admin() {
   $form['stage_file_proxy_headers'] = array(
     '#type' => 'textarea',
     '#title' => t('HTTP headers'),
-    '#default_value' => $config->get('proxy_headers'),
+    '#default_value' => $config->get('headers'),
     '#description' => t('When Stage File Proxy is configured to transfer the
       remote file to local machine, it will use these headers for HTTP request.
       Use format like "Referer|http://example.com/'),
@@ -384,7 +384,7 @@ function stage_file_proxy_fetch_file($relative_path, array $options = array()) {
 
   $destination = str_replace('///', '//', "$destination/") . backdrop_basename($relative_path);
 
-  $headers = _stage_file_proxy_create_headers_array(config_get('stage_file_proxy.settings', 'proxy_headers'));
+  $headers = _stage_file_proxy_create_headers_array(config_get('stage_file_proxy.settings', 'headers'));
   $result = backdrop_http_request($url, array('headers' => $headers));
   if ($result->code != 200) {
     watchdog('stage_file_proxy', 'HTTP error @errorcode occurred when trying to fetch @remote.', array('@errorcode' => $result->code, '@remote' => $url), WATCHDOG_ERROR);
