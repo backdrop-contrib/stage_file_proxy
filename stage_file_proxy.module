@@ -128,7 +128,7 @@ function stage_file_proxy_menu() {
   // If fast_404_path_check is enabled, the files path must be registered in
   // the router table, otherwise fast_404 will abort the request before
   // stage_file_proxy can handle it.
-  if module_exists('fast_404') {
+  if (module_exists('fast_404')) {
     if (config_get('fast_404.settings', 'path_check')) {
       $items[_stage_file_proxy_file_dir() . '/%'] = array();
     }
