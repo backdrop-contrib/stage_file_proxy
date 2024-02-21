@@ -24,13 +24,11 @@ This project is GPL v2 software. See the LICENSE.txt file in this directory for 
 
 - [Wylbur](https://github.com/wylbur)
 
-## Drupal 7 Maintainers
+## Credit
+
+Ported to Backdrop CMS by [Herb v/d Dool](https://github.com/herbdool).
 
 Maintainers of Drupal 7 version:
 
-* Greg Knaddison (https://www.drupal.org/u/greggles)
-* Rob Wilmshurst (https://www.drupal.org/u/robwilmshurst)
-
-## Ported to Backdrop CMS 
-
-by Herb v/d Dool (https://github.com/herbdool).
+* [Greg Knaddison](https://www.drupal.org/u/greggles)
+* [Rob Wilmshurst](https://www.drupal.org/u/robwilmshurst)
