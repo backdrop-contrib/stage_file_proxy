@@ -186,7 +186,7 @@ function stage_file_proxy_admin() {
       local machine, it will just serve a 301 to the remote file and let the origin webserver handle it."),
     '#required' => FALSE,
   );
-  
+
   $form['stage_file_proxy_excluded_extensions'] = array(
     '#type' => 'textfield',
     '#title' => t('Excluded Extensions'),
@@ -313,7 +313,7 @@ function stage_file_proxy_get_file_remote_url($relative_path, array $options = a
 
   if (!isset($base_url)) {
     $base_url = FALSE;
-    $server = rtrim($config->get('origin'), '/');
+    $server = rtrim($config->get('origin'), ' \n\r\t\v\0/');
 
     // Quit if we are the origin. Ignore http(s) in the origin comparison.
     if (preg_replace('#^[a-z]*://#', '', $server) == preg_replace('#^[a-z]*://#', '', $GLOBALS['base_url'])) {
